@@ -12,9 +12,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        imageView5.setOnClickListener {
+            ssmv.closeAll()
+        }
+
     }
     fun click(v : View){
         Toast.makeText(this, "Clicked !", Toast.LENGTH_LONG).show()
+
+
 
     }
 }

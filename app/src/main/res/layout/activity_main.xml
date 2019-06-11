@@ -12,9 +12,32 @@
     <org.noandish.library.singleslidermenu.SingleCircleSliderMenuView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/ssmv"
             android:paddingTop="50dp">
 
         <!-- Sample with only show  -->
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:gravity="left|center"
+                      android:background="#C2CDDF"
+                      android:orientation="horizontal">
+            <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    app:srcCompat="@drawable/ic_account_circle_24dp"
+                    android:id="@+id/imageView2"
+                    android:layout_marginLeft="10dp"
+                    android:padding="5dp"
+                    tools:ignore="VectorDrawableCompat"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="match_parent"
+                      android:padding="5dp"
+                      android:gravity="center"
+                      android:text="Profile"/>
+        </LinearLayout>
+
+        <!-- Sample with only show -->
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="match_parent"
@@ -35,27 +58,6 @@
                       android:text="info"/>
         </LinearLayout>
 
-        <!-- Sample with only show  -->
-
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:gravity="left|center"
-                      android:orientation="horizontal">
-            <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    app:srcCompat="@drawable/ic_account_circle_24dp"
-                    android:id="@+id/imageView2"
-                    android:layout_marginLeft="10dp"
-                    android:padding="5dp"
-                    tools:ignore="VectorDrawableCompat"/>
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="match_parent"
-                      android:padding="5dp"
-                      android:gravity="center"
-                      android:text="Profile"/>
-        </LinearLayout>
-
 
         <!-- Sample with action  -->
 
@@ -64,6 +66,7 @@
                 android:layout_height="match_parent"
                 android:onClick="click"
                 android:gravity="left|center"
+                android:background="#E9E9E9"
                 android:orientation="horizontal">
             <ImageView
                     android:layout_width="32dp"
@@ -82,21 +85,27 @@
 
 
         <!-- Sample with only show  -->
+        <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
 
-        <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                app:srcCompat="@drawable/ic_add_circle_black_24dp"
-                android:id="@+id/imageView5"
-                android:layout_marginLeft="10dp"
-                android:padding="5dp"
-                tools:ignore="VectorDrawableCompat"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/ic_close_24dp"
+                    android:id="@+id/imageView5"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:text="Close all"
+                    tools:ignore="VectorDrawableCompat"/>
+        </FrameLayout>
 
         <FrameLayout android:layout_width="match_parent"
                      android:layout_height="match_parent"/>
 
 
         <!-- OR you can add any view -->
+
+
 
     </org.noandish.library.singleslidermenu.SingleCircleSliderMenuView>
 

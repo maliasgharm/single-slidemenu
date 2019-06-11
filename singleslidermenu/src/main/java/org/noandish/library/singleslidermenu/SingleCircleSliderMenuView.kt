@@ -35,7 +35,7 @@ class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
         isClickable = false
     }
 
-    private fun closeAll() {
+    fun closeAll() {
         var timeDelay = 0L
         for (i in 0 until childCount) {
             val v = getChildAt(i)
@@ -57,11 +57,7 @@ class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
     @SuppressLint("ClickableViewAccessibility", "LongLogTag", "RtlHardcoded")
     private fun addedView(view: View) {
         val cardView = CardView(context)
-        if (view.background == null)
-            cardView.setCardBackgroundColor(Color.parseColor("#eeeeeeee"))
-        else if (view.background is ColorDrawable) {
-            cardView.setCardBackgroundColor((view.background as ColorDrawable).color)
-        }
+
 
         val parentView = RelativeLayout(context)
         val paramsParentView =
@@ -198,6 +194,28 @@ class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
         val paramsMain = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         paramsMain.setMargins(0, 0, 0, 20)
         super.addView(cardView, paramsMain)
+
+        cardView.setCardBackgroundColor(
+            when {
+                view.background == null -> {
+                    Color.parseColor("#eeeeeeee")
+                }
+                view.background is ColorDrawable -> (view.background as ColorDrawable).color
+                else -> Color.WHITE
+            }
+        )
+
+        imgV.setColorFilter(
+            when {
+                view.background == null -> Color.BLACK
+                view.background is ColorDrawable -> getBlackOrWhaiteColor((view.background as ColorDrawable).color)
+                else -> Color.BLACK
+            }
+        )
+
+        imgV.visibility = View.VISIBLE
+        Handler().postDelayed({ imgV.bringToFront() }, 10)
+
     }
 
     private fun changeColorBackground(percent: Float) {
@@ -217,6 +235,16 @@ class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
             }
         }
         return isOpened
+    }
+
+    private fun getBlackOrWhaiteColor(color: Int): Int {
+        val rgb = intArrayOf(Color.red(color), Color.green(color), Color.blue(color))
+        val o = Math.round(
+            (rgb[0] * 299.0 +
+                    rgb[1] * 587 +
+                    rgb[2] * 114) / 1000
+        )
+        return if (o > 125) Color.BLACK else Color.WHITE
     }
 
     companion object {

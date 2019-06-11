@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SingleCircleSliderMenuView_Layout">
+        <attr name="layout_maxCloseWidth" format="float"/>
+        <attr name="layout_minCloseWidth" format="float"/>
+        <attr name="layout_backgroundColor" format="color"/>
+        <attr name="onChangeOpen" format="string"/>
+    </declare-styleable>
+</resources>

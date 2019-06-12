@@ -7,12 +7,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Handler
+import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import androidx.cardview.widget.CardView
 
 class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

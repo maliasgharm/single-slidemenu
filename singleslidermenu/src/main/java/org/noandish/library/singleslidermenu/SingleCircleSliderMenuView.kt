@@ -5,9 +5,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Handler
-import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.view.*
 import android.widget.ImageView
@@ -39,7 +39,8 @@ class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
         var timeDelay = 0L
         for (i in 0 until childCount) {
             val v = getChildAt(i)
-            if (v is CardView && v.tag is Boolean && v.tag as Boolean) {
+
+            if (v is RelativeLayout && v.tag is Boolean && v.tag as Boolean) {
                 Handler().postDelayed({
                     v.animate().x(defX).start()
                     v.tag = false
@@ -56,8 +57,10 @@ class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
 
     @SuppressLint("ClickableViewAccessibility", "LongLogTag", "RtlHardcoded")
     private fun addedView(view: View) {
-        val cardView = CardView(context)
+        val cardView = RelativeLayout(context)
 
+        val bgCardView = GradientDrawable()
+        bgCardView.cornerRadius = defRadius
 
         val parentView = RelativeLayout(context)
         val paramsParentView =
@@ -88,7 +91,7 @@ class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
         viewParams.gravity = Gravity.LEFT
         parentView.addView(view, viewParams)
         cardView.addView(parentView, paramsParentView)
-        cardView.radius = defRadius
+//        cardView.radius = defRadius
         var lastMoved = 0f
         var isClose = true
         if (view is ViewGroup) {
@@ -107,7 +110,9 @@ class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
                     v.x = event.rawX
                     isClose = event.rawX - lastMoved > if (isClose) 20 else -20
                     lastMoved = event.rawX
-                    cardView.radius = radius
+
+                    (cardView.background as GradientDrawable).cornerRadius  = radius
+
                     if ((countIsOpened <= 1 && cardView.tag is Boolean && (cardView.tag as Boolean))
                         || countIsOpened <= 0
                     ) changeColorBackground(percent)
@@ -145,7 +150,7 @@ class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
             cardView.animate().setUpdateListener {
                 val percent = (cardView.x / defX)
                 val radius = (percent * defRadius)
-                cardView.radius = radius
+                (cardView.background as GradientDrawable).cornerRadius  = radius
 
                 if ((countIsOpened() <= 1 && cardView.tag is Boolean && (cardView.tag as Boolean))
                     || countIsOpened() <= 0
@@ -163,7 +168,7 @@ class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
                 override fun onAnimationEnd(animation: Animator?) {
                     val percent = (cardView.x / defX)
                     val radius = (percent * defRadius)
-                    cardView.radius = radius
+                    (cardView.background as GradientDrawable).cornerRadius  = radius
                     isOpened = percent == 0f
                     if ((countIsOpened() <= 1 && cardView.tag is Boolean && (cardView.tag as Boolean))
                         || countIsOpened() <= 0
@@ -179,7 +184,7 @@ class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
                 override fun onAnimationStart(animation: Animator?) {
                     val percent = (cardView.x / defX)
                     val radius = (percent * defRadius)
-                    cardView.radius = radius
+                    (cardView.background as GradientDrawable).cornerRadius  = radius
                     isOpened = percent == 0f
                     if ((countIsOpened() <= 1 && cardView.tag is Boolean && (cardView.tag as Boolean))
                         || countIsOpened() <= 0
@@ -195,16 +200,15 @@ class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
         paramsMain.setMargins(0, 0, 0, 20)
         super.addView(cardView, paramsMain)
 
-        cardView.setCardBackgroundColor(
+        bgCardView.setColor(
             when {
                 view.background == null -> {
                     Color.parseColor("#eeeeeeee")
                 }
                 view.background is ColorDrawable -> (view.background as ColorDrawable).color
                 else -> Color.WHITE
-            }
-        )
-
+            })
+        view.background = null
         imgV.setColorFilter(
             when {
                 view.background == null -> Color.BLACK
@@ -212,6 +216,7 @@ class SingleCircleSliderMenuView @kotlin.jvm.JvmOverloads constructor(
                 else -> Color.BLACK
             }
         )
+        cardView.background = bgCardView
 
         imgV.visibility = View.VISIBLE
         Handler().postDelayed({ imgV.bringToFront() }, 10)

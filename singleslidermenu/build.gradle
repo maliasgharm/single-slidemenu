@@ -2,6 +2,37 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
+apply plugin: 'com.novoda.bintray-release'
+
+apply plugin: 'com.android.library'
+
+publish {
+
+    def groupProjectID = 'slidemenulibrary'
+    def artifactProjectID = 'singleslidermenu'
+    def publishVersionID = '1.2.0'
+
+    userOrg = 'aaliasgharr'
+    repoName = 'single-slidemenu'
+    groupId = groupProjectID
+    artifactId = artifactProjectID
+    publishVersion = publishVersionID
+    desc = 'a library for slidemenu'
+    website = 'https://github.com/maliasgharm/single-slidemenu'
+
+}
+
+afterEvaluate {
+    tasks.whenTaskAdded { task ->
+        if (task.name == 'assembleDebug') {
+            task.dependsOn 'copyNativeLibs'
+        }
+        if (task.name == 'assembleRelease') {
+            task.dependsOn 'copyNativeLibs'
+        }
+    }
+}
+
 android {
     compileSdkVersion 28
 

@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    fun click(v : View){
+    fun click(@Suppress("UNUSED_PARAMETER") v : View){
         Toast.makeText(this, "Clicked !", Toast.LENGTH_LONG).show()
 
 
